@@ -1,0 +1,148 @@
+:root {
+  --brand: #0f4c81;
+  --brand-dark: #0a365c;
+  --accent: #f2a900;
+  --text: #1b1f24;
+  --muted: #4a5560;
+  --surface: #ffffff;
+  --page: #f5f7fa;
+  --border: #dde3ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  color: var(--text);
+  background: var(--page);
+  line-height: 1.55;
+}
+
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.demo-banner {
+  background: var(--accent);
+  color: #1b1f24;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+}
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.logo {
+  font-weight: 800;
+  color: var(--brand);
+  font-size: 18px;
+}
+
+.header-phone {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  color: #fff;
+  padding: 56px 0;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  font-size: clamp(28px, 5vw, 42px);
+  line-height: 1.15;
+  margin: 0 0 16px;
+  max-width: 720px;
+}
+
+.hero p {
+  max-width: 680px;
+  font-size: 17px;
+}
+
+.hint {
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.samples {
+  margin: 0;
+  padding-left: 20px;
+}
+
+h2 {
+  color: var(--brand);
+  margin-top: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+.card h3 {
+  margin: 0 0 6px;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.embed pre {
+  background: #10161d;
+  color: #e6edf3;
+  padding: 16px;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 13px;
+}
+
+.site-footer {
+  margin-top: 48px;
+  padding: 24px 0 96px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 14px;
+}

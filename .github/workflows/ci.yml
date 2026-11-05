@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A new push to the same PR cancels the older, now-irrelevant run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    # Real Postgres + pgvector, so the database code path is tested too.
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: frontdesk
+          POSTGRES_PASSWORD: frontdesk
+          POSTGRES_DB: frontdesk
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U frontdesk -d frontdesk"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 30
+
+    env:
+      # Everything runs offline against the deterministic fake provider: no
+      # API key exists in CI, and none is needed.
+      AI_PROVIDER: fake
+      DATABASE_URL: postgres://frontdesk:frontdesk@localhost:5432/frontdesk
+      NEXT_TELEMETRY_DISABLED: "1"
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format
+        run: npm run format:check
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit + integration tests
+        run: npm test
+        env:
+          TEST_DATABASE_URL: postgres://frontdesk:frontdesk@localhost:5432/frontdesk
+          # Fail (rather than skip) if the database test cannot run.
+          REQUIRE_DB_TESTS: "1"
+
+      - name: Evals (fake provider, 90% threshold)
+        run: npm run eval:ci
+
+      - name: Ingest smoke test (second run must embed nothing)
+        run: |
+          npm run ingest
+          npm run ingest | tee ingest2.log
+          grep -q "Embedded/updated: 0" ingest2.log
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results
+          path: evals/results/latest.json
+          if-no-files-found: ignore

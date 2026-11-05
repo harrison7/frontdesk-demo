@@ -1,0 +1,23 @@
+# Local development database: Postgres 16 with the pgvector extension.
+# Credentials are throwaway local-dev values; never reuse them anywhere real.
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: frontdesk
+      POSTGRES_PASSWORD: frontdesk
+      POSTGRES_DB: frontdesk
+    ports:
+      # Host port 5433 (not 5432) so it does not collide with a natively
+      # installed Postgres, which is common on dev machines.
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U frontdesk -d frontdesk"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  pgdata:
