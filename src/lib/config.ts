@@ -46,7 +46,10 @@ export interface AppConfig {
  * bag-of-words hash vectors produce low cosine scores even for good matches
  * (few shared words), while real semantic embeddings rarely drop near zero
  * even for unrelated text. So the "is this relevant at all?" cutoff has to be
- * provider-specific. Both defaults were picked by running the eval set.
+ * provider-specific. The fake default was tuned on the eval set (long sections
+ * dilute bag-of-words scores, so good matches can sit near 0.1). The openai
+ * default is a conservative starting point for text-embedding-3-small; tune it
+ * with `npm run eval:real` and RETRIEVAL_MIN_SCORE.
  */
 const DEFAULT_MIN_SCORE: Record<ProviderName, number> = { fake: 0.08, openai: 0.3 };
 

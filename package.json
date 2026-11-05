@@ -20,7 +20,8 @@
     "ingest": "tsx scripts/ingest.ts",
     "eval": "tsx scripts/eval.ts",
     "eval:ci": "tsx scripts/eval.ts --provider fake --min-pass-rate 0.9",
-    "check": "npm run lint && npm run format:check && npm run typecheck && npm test && npm run eval:ci && npm run build"
+    "check": "npm run lint && npm run format:check && npm run typecheck && npm test && npm run eval:ci && npm run build",
+    "eval:real": "tsx scripts/eval.ts --provider openai --min-pass-rate 0.85"
   },
   "dependencies": {
     "next": "^16.4.5",
