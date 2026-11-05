@@ -50,11 +50,15 @@ async function main() {
   const results = await runEvals(cases, { chat, retriever });
   for (const r of results) {
     const mark = r.passed ? "PASS" : "FAIL";
-    console.log(`${mark}  ${r.category.padEnd(12)} ${r.id.padEnd(28)} ${r.reply.outcome}/${r.reply.reason}`);
+    console.log(
+      `${mark}  ${r.category.padEnd(12)} ${r.id.padEnd(28)} ${r.reply.outcome}/${r.reply.reason}`,
+    );
     if (!r.passed) for (const f of r.failures) console.log(`        - ${f}`);
     if (values.verbose || !r.passed) {
       console.log(`        answer: ${r.reply.answer.replace(/\s+/g, " ").slice(0, 200)}`);
-      console.log(`        retrieved: ${r.trace.retrieved.map((x) => `${x.id}(${x.score})`).join(", ")}`);
+      console.log(
+        `        retrieved: ${r.trace.retrieved.map((x) => `${x.id}(${x.score})`).join(", ")}`,
+      );
     }
   }
 

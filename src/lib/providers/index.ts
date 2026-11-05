@@ -1,7 +1,10 @@
 import type { AppConfig } from "../config";
 import { FakeChatProvider } from "./fake-chat";
 import { FakeEmbeddingProvider } from "./fake-embeddings";
-import { OpenAICompatibleChatProvider, OpenAICompatibleEmbeddingProvider } from "./openai-compatible";
+import {
+  OpenAICompatibleChatProvider,
+  OpenAICompatibleEmbeddingProvider,
+} from "./openai-compatible";
 import type { ChatProvider, EmbeddingProvider } from "./types";
 
 export interface Providers {

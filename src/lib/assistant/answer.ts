@@ -49,11 +49,25 @@ export async function answerQuestion(
   const trace: ReplyTrace = { retrieved: [] };
 
   const refuse = (reason: ReasonCode, answer: string): AssistantResult => ({
-    reply: { outcome: "refused", reason, safety, answer, citations: [], handoff: safety.length > 0 },
+    reply: {
+      outcome: "refused",
+      reason,
+      safety,
+      answer,
+      citations: [],
+      handoff: safety.length > 0,
+    },
     trace,
   });
   const unsure = (reason: ReasonCode, detail?: string): AssistantResult => ({
-    reply: { outcome: "unsure", reason, safety, answer: unsureText(safety), citations: [], handoff: true },
+    reply: {
+      outcome: "unsure",
+      reason,
+      safety,
+      answer: unsureText(safety),
+      citations: [],
+      handoff: true,
+    },
     trace: { ...trace, detail },
   });
 

@@ -22,6 +22,5 @@ export const RESPONSES = {
 
   empty: "Please type a question, and I'll do my best to help.",
 
-  tooLong:
-    "That message is a bit long for me. Could you ask your question in a sentence or two?",
+  tooLong: "That message is a bit long for me. Could you ask your question in a sentence or two?",
 } as const;

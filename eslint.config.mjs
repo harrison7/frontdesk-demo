@@ -9,6 +9,16 @@ const config = [
   // Prettier owns formatting; this turns off ESLint rules that would fight it.
   prettier,
   {
+    rules: {
+      // `const { embedding, ...rest } = row` is the idiomatic way to omit
+      // fields; don't flag the omitted ones as unused.
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { ignoreRestSiblings: true, argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+    },
+  },
+  {
     ignores: [".next/**", "node_modules/**", "next-env.d.ts", "evals/results/**"],
   },
 ];

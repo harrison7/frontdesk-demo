@@ -31,7 +31,10 @@ export function gradeReply(testCase: EvalCase, reply: AssistantReply): string[] 
   }
 
   const expectedSafety = [...(e.safety ?? [])].sort().join(",");
-  const actualSafety = reply.safety.map((s) => s.kind).sort().join(",");
+  const actualSafety = reply.safety
+    .map((s) => s.kind)
+    .sort()
+    .join(",");
   if (expectedSafety !== actualSafety) {
     failures.push(`safety [${actualSafety}], expected [${expectedSafety}]`);
   }

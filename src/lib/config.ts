@@ -25,7 +25,10 @@ const EnvSchema = z.object({
     z.string().default("postgres://frontdesk:frontdesk@localhost:5433/frontdesk"),
   ),
   RETRIEVAL_MIN_SCORE: z.preprocess(emptyToUndefined, z.coerce.number().min(-1).max(1).optional()),
-  RETRIEVAL_TOP_K: z.preprocess(emptyToUndefined, z.coerce.number().int().min(1).max(20).default(4)),
+  RETRIEVAL_TOP_K: z.preprocess(
+    emptyToUndefined,
+    z.coerce.number().int().min(1).max(20).default(4),
+  ),
   ALLOWED_ORIGINS: z.preprocess(emptyToUndefined, z.string().default("")),
 });
 
@@ -33,7 +36,12 @@ export type ProviderName = "fake" | "openai";
 
 export interface AppConfig {
   provider: ProviderName;
-  openai: { baseUrl: string; apiKey: string | undefined; chatModel: string; embeddingModel: string };
+  openai: {
+    baseUrl: string;
+    apiKey: string | undefined;
+    chatModel: string;
+    embeddingModel: string;
+  };
   embeddingDimensions: number;
   vectorStore: "pg" | "memory";
   databaseUrl: string;

@@ -31,7 +31,8 @@ export async function ingestChunks(
 ): Promise<IngestResult> {
   const ids = new Set<string>();
   for (const c of chunks) {
-    if (ids.has(c.id)) throw new Error(`Duplicate chunk id "${c.id}"; section headings must be unique.`);
+    if (ids.has(c.id))
+      throw new Error(`Duplicate chunk id "${c.id}"; section headings must be unique.`);
     ids.add(c.id);
   }
 

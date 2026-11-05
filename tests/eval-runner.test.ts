@@ -9,9 +9,7 @@ const reply = (overrides: Partial<AssistantReply> = {}): AssistantReply => ({
   reason: "grounded",
   safety: [],
   answer: "A furnace tune-up is $109 [1].",
-  citations: [
-    { n: 1, chunkId: "p#x", docId: "services-and-pricing", docTitle: "P", section: "X" },
-  ],
+  citations: [{ n: 1, chunkId: "p#x", docId: "services-and-pricing", docTitle: "P", section: "X" }],
   handoff: false,
   ...overrides,
 });
@@ -25,12 +23,21 @@ const testCase = (expect: EvalCase["expect"]): EvalCase => ({
 
 describe("gradeReply", () => {
   it("passes a reply that meets every expectation", () => {
-    const c = testCase({ outcome: "answered", citesDoc: "services-and-pricing", includes: ["$109"] });
+    const c = testCase({
+      outcome: "answered",
+      citesDoc: "services-and-pricing",
+      includes: ["$109"],
+    });
     expect(gradeReply(c, reply())).toEqual([]);
   });
 
   it("reports wrong outcome, missing citation, missing and forbidden text", () => {
-    const c = testCase({ outcome: "unsure", citesDoc: "faq", includes: ["$89"], excludes: ["$109"] });
+    const c = testCase({
+      outcome: "unsure",
+      citesDoc: "faq",
+      includes: ["$89"],
+      excludes: ["$109"],
+    });
     expect(gradeReply(c, reply())).toHaveLength(4);
   });
 
