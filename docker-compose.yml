@@ -8,7 +8,9 @@ services:
       POSTGRES_PASSWORD: frontdesk
       POSTGRES_DB: frontdesk
     ports:
-      - "5432:5432"
+      # Host port 5433 (not 5432) so it does not collide with a natively
+      # installed Postgres, which is common on dev machines.
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
