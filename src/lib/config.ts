@@ -48,7 +48,7 @@ export interface AppConfig {
  * even for unrelated text. So the "is this relevant at all?" cutoff has to be
  * provider-specific. Both defaults were picked by running the eval set.
  */
-const DEFAULT_MIN_SCORE: Record<ProviderName, number> = { fake: 0.12, openai: 0.3 };
+const DEFAULT_MIN_SCORE: Record<ProviderName, number> = { fake: 0.08, openai: 0.3 };
 
 export function loadConfig(env: Record<string, string | undefined> = process.env): AppConfig {
   const parsed = EnvSchema.safeParse(env);

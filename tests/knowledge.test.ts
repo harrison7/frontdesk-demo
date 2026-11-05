@@ -130,12 +130,12 @@ describe("retriever", () => {
     const embedder = new FakeEmbeddingProvider(1536);
     const store = new InMemoryVectorStore();
     await ingestChunks(chunkDocuments(await loadDocuments()), store, embedder);
-    const retriever = createRetriever(embedder, store, { topK: 4, minScore: 0.12 });
+    const retriever = createRetriever(embedder, store, { topK: 4, minScore: 0.08 });
 
     const hits = await retriever.retrieve("How much does a tankless water heater cost?");
     expect(hits[0]?.id).toBe("services-and-pricing#water-heaters");
 
-    for (const hit of hits) expect(hit.score).toBeGreaterThanOrEqual(0.12);
+    for (const hit of hits) expect(hit.score).toBeGreaterThanOrEqual(0.08);
 
     // Hash collisions can give an unrelated chunk a small nonzero score, so
     // off-topic handling is not left to this threshold alone; see the
