@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local env files can hold real API keys. Only .env.example is committed.
+.env
+.env.*
+!.env.example
+
+# Eval run output (regenerated on every run)
+evals/results/
+
+.DS_Store
+npm-debug.log*
